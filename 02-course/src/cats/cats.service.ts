@@ -1,3 +1,4 @@
+import { CatsRepository } from './cats.repository';
 import { Cat } from './cats.schema';
 import { CatsRequestDto } from './dto/cats.request.dto';
 import { Injectable, HttpException, UnauthorizedException } from '@nestjs/common';
@@ -8,12 +9,12 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class CatsService {
 
-    constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>) {}
+    constructor(private readonly catsRepository: CatsRepository) {}
 
     async signUp(body: CatsRequestDto) {
 
         const { email, name, password } = body;
-        const isCatExist = await this.catModel.exists({ email });
+        const isCatExist = await this.catsRepository.existsByEmail(email);
 
         if(isCatExist) {
             throw new UnauthorizedException('Existed Email');
@@ -21,7 +22,11 @@ export class CatsService {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const cat = await this.catModel.create({ email, name, password: hashedPassword });
+        const cat = await this.catsRepository.create({
+            email,
+            name,
+            password: hashedPassword
+        })
 
         return cat.readOnlyData;
     }
