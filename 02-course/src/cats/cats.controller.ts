@@ -1,15 +1,17 @@
 import { CatsRequestDto } from './dto/cats.request.dto';
-import { HttpExceptionFilter } from './../common/http-exception.filter';
-import { CatsService } from './cats.service';
-import { Controller, Delete, Get, HttpException, Patch, Post, Put, UseFilters, Param, ParseIntPipe, Body } from '@nestjs/common';
+import { CatsService } from "./cats.service";
+import { Controller, Get, Post, Body, UseFilters, HttpException, Param } from "@nestjs/common";
+import { HttpExceptionFilter } from "../common/http-exception.filter";
+import { IsString } from 'class-validator';
 
-@Controller('cats')
-@UseFilters(HttpExceptionFilter) // 모듈 전역적으로 필터가 적용된 모습
+@UseFilters(HttpExceptionFilter)
+@Controller("cats")
 export class CatsController {
     constructor(private readonly catsService: CatsService) {}
 
     @Get()
     getCurrentCat() {
+        throw new HttpException('set up my exception filter', 401);
         return;
     }
 
@@ -18,18 +20,18 @@ export class CatsController {
         return await this.catsService.signUp(body);
     }
 
-    @Post('login')
+    @Post("login")
     logIn() {
-        return;
+        throw new HttpException('login error', 404);
     }
 
-    @Post('logout')
+    @Post("logout")
     logout() {
         return;
     }
 
-    @Post('upload/cats')
+    @Post("upload/cats")
     uploadCatImg() {
         return;
-    }    
+    }
 }

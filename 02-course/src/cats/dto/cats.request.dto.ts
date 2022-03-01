@@ -1,19 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { PickType } from "@nestjs/mapped-types";
+import { Cat } from "../cats.schema";
 
-export class CatsRequestDto {
-
-    @IsEmail()
-    @IsNotEmpty()
-    email: string;
-
-
-    @IsString()
-    @IsNotEmpty()
-    password: string;
-
-
-    @IsString()
-    @IsNotEmpty()
-    name: string;
-    
-}
+export class CatsRequestDto extends PickType(Cat, ["email", "password", "name"] as const) {}
