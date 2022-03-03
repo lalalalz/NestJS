@@ -1,8 +1,9 @@
 import { CatsRequestDto } from './dto/cats.request.dto';
 import { CatsService } from "./cats.service";
-import { Controller, Get, Post, Body, UseFilters, HttpException, Param } from "@nestjs/common";
+import { Controller, Get, Post, Body, UseFilters, HttpException, Param, UseGuards } from "@nestjs/common";
 import { HttpExceptionFilter } from "../common/http-exception.filter";
 import { IsString } from 'class-validator';
+import { AuthGuard } from '@nestjs/passport';
 
 @UseFilters(HttpExceptionFilter)
 @Controller("cats")
@@ -20,9 +21,10 @@ export class CatsController {
         return await this.catsService.signUp(body);
     }
 
+    @UseGuards(AuthGuard("local"))
     @Post("login")
     logIn() {
-        throw new HttpException('login error', 404);
+        return "You are valided!!"
     }
 
     @Post("logout")
