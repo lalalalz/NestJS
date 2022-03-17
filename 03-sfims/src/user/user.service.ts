@@ -1,16 +1,14 @@
 import { UnauthorizedException } from '@nestjs/common';
-import { HttpException } from '@nestjs/common';
 import { Repository } from 'src/interface/repository';
-import { UserRepository } from './user.repository';
 import { Inject, Injectable } from '@nestjs/common';
-import { UserRequestDto } from './dto/user.request.dto';
+import { UserLoginRequestDto } from './dto/user.login.request.dto';
 
 @Injectable()
 export class UserService {
 
     constructor(@Inject("Repository") private readonly userRepository: Repository) {}
 
-    signUp(body: UserRequestDto) {
+    signUp(body: UserLoginRequestDto) {
         
         const { id, pw } = body;
 
@@ -22,7 +20,7 @@ export class UserService {
         }
     }
 
-    login(body: UserRequestDto) {
+    login(body: UserLoginRequestDto) {
 
         const { id, pw } = body;
         const user = this.userRepository.findOne(id);

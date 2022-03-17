@@ -1,8 +1,8 @@
 import { UserLoginResponseDto } from './dto/user.login.response.dto';
 import { UserService } from './user.service';
 import { Body, Controller, Post } from '@nestjs/common';
-import { UserRequestDto } from './dto/user.request.dto';
-import { ApiCreatedResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserLoginRequestDto } from './dto/user.login.request.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserSignResponseDto } from './dto/user.sign.response.dto';
 
 
@@ -24,7 +24,7 @@ export class UserController {
         type: UserSignResponseDto
     })
     @Post('sign') 
-    signUp(@Body() body: UserRequestDto) {
+    signUp(@Body() body: UserLoginRequestDto) {
         return this.userService.signUp(body);
     }
 
@@ -40,7 +40,7 @@ export class UserController {
         type: UserLoginResponseDto
     })
     @Post('login')
-    login(@Body() body: UserRequestDto) {
+    login(@Body() body: UserLoginRequestDto) {
         return this.userService.login(body);
     }    
 }
