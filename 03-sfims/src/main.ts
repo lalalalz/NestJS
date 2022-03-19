@@ -1,7 +1,7 @@
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app.module';
+import { ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,13 +11,13 @@ async function bootstrap() {
 
   // swagger 설정
   const config = new DocumentBuilder()
-    .setTitle('API DOCS')
-    .setDescription('The SFIMS API Docs...')
-    .setVersion('1.0.0')
+    .setTitle("API DOCS")
+    .setDescription("The SFIMS API Docs...")
+    .setVersion("1.0.0")
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup("docs", app, document);
 
   // 서버 ON
   await app.listen(3000);
